@@ -32,11 +32,11 @@
 
 <script setup>
 import { vMaska } from 'maska'
-import { reactive } from 'vue'
-import { ref } from 'vue'
+import { reactive, ref, onMounted } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 
-
+const router = useRouter()
 
 const credentials = reactive({
     phone: null
@@ -44,11 +44,23 @@ const credentials = reactive({
 
 const waitingOnVerification = ref(false)
 
+onMounted(() => {
+    if (localStorage.getItem('token')) {
+        router.push({ 
+            name: 'landing'
+        })
+    }
+})
+
+const getFormattedCredentials = () => {
+    return {
+        phone: credentials.phone.replaceAll(' ', '').replace('(', '').replace(')', '').replace('-', ''),
+        login_code: credentials.login_code
+    }
+}
 
 const handleLogin = () => {
-    axios.post('http://localhost:8000/api/login', {
-        phone: credentials.phone.replaceAll(' ', '').replace('(', '').replace(')', '').replace('-', '')
-    }) 
+    axios.post('http://localhost:8000/api/login', getFormattedCredentials())
     .then(response => {
         console.log(response.data)
         waitingOnVerification.value = true
@@ -60,12 +72,13 @@ const handleLogin = () => {
 }
 
 const handleVerification = () => {
-    axios.post('http://localhost:8000/api/login/verify', {
-        phone: credentials.phone.replaceAll(' ', '').replace('(', '').replace(')', '').replace('-', ''),
-        login_code: credentials.login_code
-    }) 
+    axios.post('http://localhost:8000/api/login/verify', getFormattedCredentials())
     .then(response => {
         console.log(response.data) // auth token
+        localStorage.setItem('token', response.data)
+        router.push({ 
+            name: 'landing'
+        })
     })
     .catch(error => {
         console.log(error)
