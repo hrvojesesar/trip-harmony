@@ -1,7 +1,7 @@
 <template>
      <div class="pt-16">
         <h1 class="text-3xl font-semibold mb-4">Where do you want to go?</h1>
-        <form action="#">
+        <form @submit.prevent="handleSelectLocation">
             <div class="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div class="bg-white px-4 py-5 sm:p-6">
                     <div>
@@ -46,7 +46,7 @@ const handleLocationChanged = (e) => {
 } 
 
 const handleSelectLocation = () => {
-    if (location.destination.name !== '') {
+    if (location.destination.name && location.destination.name.trim() !== '') {
        router.push({ name: 'map' });
     }
 }
