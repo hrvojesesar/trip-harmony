@@ -5,8 +5,8 @@
             <div class="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div class="bg-white px-4 py-5 sm:p-6">
                     <div>
-                        <GMapMap v-if="location.destination.name !== ''" :zoom="11" :center="location.destination.geometry" ref="gMap" style="width: 100%; height: 256px;">
-                            
+                        <GMapMap v-if="location.destination.name !== ''" :zoom="11" :center="location.destination.geometry" ref="gMap" 
+                        style="width: 100%; height: 256px;"> 
                         </GMapMap>
                     </div>
                     <div class="mt-2">
@@ -15,6 +15,7 @@
                 </div>  
                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                     <button
+                        @click="handleConfirmTrip"
                         class="inline-flex justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none">
                         Let's Go!
                     </button>
@@ -30,12 +31,29 @@ import { useLocationStore } from '@/stores/location'
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { http } from '@/helpers/http'
 
 const location = useLocationStore()
 const router = useRouter()
 
 const gMap = ref(null)
 
+const handleConfirmTrip = () => {
+    http().post('/api/trip', {
+        origin: location.current.geometry,
+        destination: location.destination.geometry,
+        destination_name: location.destination.name
+    })
+    .then((response) => {
+        router.push({ 
+            name: 'trip' 
+        })
+    })
+    .catch((error) => {
+        console.error(error)
+    })
+}
+            
 onMounted(async () => {
     if (location.destination.name === '') {
         router.push({ name: 'location' })
