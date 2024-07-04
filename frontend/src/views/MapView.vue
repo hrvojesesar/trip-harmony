@@ -5,8 +5,8 @@
             <div class="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div class="bg-white px-4 py-5 sm:p-6">
                     <div>
-                        <GMapMap :zoom="11" :center="location.destination.geometry" style="width: 100%; height: 256px;">
-                            <GMapMarker :position="location.destination.geometry" />
+                        <GMapMap v-if="location.destination.name !== ''" :zoom="11" :center="location.destination.geometry" ref="gMap" style="width: 100%; height: 256px;">
+                            
                         </GMapMap>
                     </div>
                     <div class="mt-2">
@@ -27,9 +27,42 @@
 <script setup>
 
 import { useLocationStore } from '@/stores/location'
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
 const location = useLocationStore()
 const router = useRouter()
+
+const gMap = ref(null)
+
+onMounted(async () => {
+    if (location.destination.name === '') {
+        router.push({ name: 'location' })
+    }
+
+    await location.updateCurrentLocation()
+
+    gMap.value.$mapPromise.then((mapObject) => {
+        let currentPoint = new google.maps.LatLng(location.current.geometry),
+        destinationPoint = new google.maps.LatLng(location.destination.geometry),
+        directionService = new google.maps.DirectionsService,
+        directionsDisplay = new google.maps.DirectionsRenderer({ map: mapObject })
+
+        directionService.route({
+            origin: currentPoint,
+            destination: destinationPoint,
+            avoidTolls: false,
+            avoidHighways: false,
+            travelMode: google.maps.TravelMode.DRIVING
+        }, (res, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(res)
+            } else {
+                console.error(status)
+            }
+        })
+    })
+})
 
 </script>
