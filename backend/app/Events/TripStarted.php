@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use App\Models\Trip;
 use App\Models\User;
 
-class TripStarted
+class TripStarted implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

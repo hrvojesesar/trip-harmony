@@ -40,7 +40,6 @@ const currentIcon = {
     }
 }
 
-
 const destinationIcon = {
     url: 'https://openmoji.org/data/color/svg/1F920.svg',
     scaledSize: {
@@ -67,8 +66,12 @@ onMounted(() => {
        setInterval(async () => {
            await location.updateCurrentLocation();
            updateMapBounds(mapObject);
+            console.log('Vozač: ', location.current.geometry)
+            console.log('Putnik: ', location.destination.geometry)
        }, 5000)
     })
 })
+
+
 
 </script>

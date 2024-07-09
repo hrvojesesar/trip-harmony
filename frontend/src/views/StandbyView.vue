@@ -32,15 +32,15 @@
 </template>
 
 <script setup>
-import Loader from '@/components/Loader.vue';
-import Echo from 'laravel-echo';
-import { onMounted } from 'vue';
-import Pusher from 'pusher-js';
-import { useTripStore } from '@/stores/trip';
-import { ref } from 'vue';
+import { ref } from 'vue'
+import Loader from '@/components/Loader.vue'
+import { onMounted } from 'vue'
+import Echo from 'laravel-echo'
+import Pusher from 'pusher-js'
+import { useTripStore } from '@/stores/trip'
+import { useLocationStore } from '@/stores/location'
 import { http } from '@/helpers/http';
-import { useLocationStore } from '@/stores/location';
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
 
 const title = ref('Waiting for a ride request...');
@@ -57,21 +57,21 @@ const handleDeclineTrip = () => {
 const handleAcceptTrip = () => {
     http().post(`/api/trip/${trip.id}/accept`, {
         driver_location: location.current.geometry
-   })
-      .then((response) => {
-         location.$patch({
-            destination: {
-                name: 'Passenger',
-                geometry: response.data.origin
-            }
-         })
+    })
+        .then((response) => {
+            location.$patch({
+                destination: {
+                    name: 'Passenger',
+                    geometry: response.data.origin
+                }
+            })
 
-         router.push({
-            name: 'driving'
-         })
-      })
+            router.push({
+                name: 'driving'
+            })
+        })
         .catch((error) => {
-             console.error(error);
+            console.error(error)
         })
 }
 

@@ -13,7 +13,7 @@ use App\Models\Trip;
 use App\Models\User;
 
 
-class TripEnded
+class TripEnded implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
