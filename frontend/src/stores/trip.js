@@ -18,6 +18,16 @@ export const useTripStore = defineStore('trip', () => {
 
     const destination_name = ref('')
 
-    return { id, user_id, origin, destination, destination_name }
+    const reset = () => {
+        id.value = null
+        user_id.value = null
+        origin.lat = null
+        origin.lng = null
+        destination.lat = null
+        destination.lng = null
+        destination_name.value = ''
+    }
+
+    return { id, user_id, origin, destination, destination_name, reset }
 
 })

@@ -18,9 +18,11 @@
                 </div>
                 <div class="flex justify-between bg-gray-50 px-4 py-3 text-right sm:px-6">
                     <button
+                        @click="handleDeclineTrip"
                         class="inline-flex justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none">Decline
                     </button>
                     <button
+                        @click="handleAcceptTrip"
                         class="inline-flex justify-center rounded-md border border-transparent bg-black py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-600 focus:outline-none">Accept
                     </button>
                 </div>
@@ -36,12 +38,45 @@ import { onMounted } from 'vue';
 import Pusher from 'pusher-js';
 import { useTripStore } from '@/stores/trip';
 import { ref } from 'vue';
+import { http } from '@/helpers/http';
+import { useLocationStore } from '@/stores/location';
+import { useRouter } from 'vue-router';
+
 
 const title = ref('Waiting for a ride request...');
 const trip = useTripStore();
 const gMap = ref(null);
+const location = useLocationStore();
+const router = useRouter();
 
-onMounted(() => {
+const handleDeclineTrip = () => {
+    trip.reset();
+    title.value = 'Waiting for a ride request...';
+}
+
+const handleAcceptTrip = () => {
+    http().post(`/api/trip/${trip.id}/accept`, {
+        driver_location: location.current.geometry
+   })
+      .then((response) => {
+         location.$patch({
+            destination: {
+                name: 'Passenger',
+                geometry: response.data.origin
+            }
+         })
+
+         router.push({
+            name: 'driving'
+         })
+      })
+        .catch((error) => {
+             console.error(error);
+        })
+}
+
+onMounted(async () => {
+   await location.updateCurrentLocation();
    let echo = new Echo({
         broadcaster: 'pusher',
         key: 'mykey',
