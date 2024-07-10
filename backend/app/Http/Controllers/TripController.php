@@ -55,13 +55,13 @@ class TripController extends Controller
         ]);
 
         $trip->update([
-            'driver_id' => $request->user()->id,
+            'driver_id' => $request->user()->driver->id,
             'driver_location' => $request->driver_location,
         ]);
 
         $trip->load('driver.user');
 
-        TripAccepted::dispatch($trip, $request->user());
+        TripAccepted::dispatch($trip, $trip->user);
 
         return $trip;
     }
