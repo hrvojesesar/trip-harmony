@@ -8,6 +8,7 @@
                         <GMapMap :zoom="14" :center="location.current.geometry" ref="gMap"
                             style="width:100%; height: 256px;">
                             <GMapMarker :position="location.current.geometry" :icon="currentIcon" />
+                            <GMapMarker :position="trip.driver_location" :icon="driverIcon" />
                         </GMapMap>
                     </div>
                 </div>
@@ -39,10 +40,30 @@ const gMapObject = ref(null)
 const currentIcon = {
     url: 'https://openmoji.org/data/color/svg/1F920.svg',
     scaledSize: {
+        width: 40,
+        height: 40
+    }
+}
+
+const driverIcon = {
+    url: 'https://openmoji.org/data/color/svg/1F698.svg',
+    scaledSize: {
         width: 32,
         height: 32
     }
 }
+
+const updateMapBounds = () => {
+    let originPoint = new google.maps.LatLng(location.current.geometry),
+        driverPoint = new google.maps.LatLng(trip.driver_location),
+        latLngBounds = new google.maps.LatLngBounds()
+
+    latLngBounds.extend(originPoint)
+    latLngBounds.extend(driverPoint)
+
+    gMapObject.value.fitBounds(latLngBounds)
+}
+
 
 onMounted(() => {
     gMap.value.$mapPromise.then((mapObject) => {
@@ -63,8 +84,15 @@ onMounted(() => {
     echo.channel(`passenger_${trip.user_id}`)
         .listen('TripAccepted', (e) => {
             trip.$patch(e.trip)
+
             title.value = "Your driver is on the way!"
             message.value = `${e.trip.driver.user.name} is coming in a ${e.trip.driver.year} ${e.trip.driver.color} ${e.trip.driver.make} ${e.trip.driver.model} with a license plate #${e.trip.driver.license_plate}`
+        })
+        .listen('TripLocationUpdated', (e) => {
+            trip.$patch(e.trip)
+
+            setTimeout(updateMapBounds, 5000)
+            console.log('Test')
         })
 })
 

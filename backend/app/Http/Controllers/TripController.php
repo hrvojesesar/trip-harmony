@@ -107,7 +107,7 @@ class TripController extends Controller
 
         $trip->load('driver.user');
 
-        TripLocationUpdated::dispatch($trip, $request->user());
+        TripLocationUpdated::dispatch($trip, $trip->user);
 
         return $trip;
     }
