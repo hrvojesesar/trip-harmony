@@ -12,7 +12,8 @@
                     </GMapMap>
                 </div>
                 <div class="mt-2">
-                    <p class="text-xl">Going to <strong>pick up a passenger</strong></p>
+                    <p class="text-xl" v-if="!trip.is_started">Going to <strong>pick up a passenger</strong></p>
+                    <p class="text-xl" v-else>Making your way to <strong>{{ location.destination.name }}</strong>...</p>
                 </div>
             </div>
             <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
@@ -56,7 +57,7 @@ const gMap = ref(null);
 const intervalRef = ref(null);
 
 
-const title = ref("Driving to passenger....")
+const title = ref("Driving to your passenger...")
 
 const currentIcon = {
     url: 'https://openmoji.org/data/color/svg/1F698.svg',
@@ -98,7 +99,7 @@ const broadcastDriverLocation = () => {
 const handlePassengerPickedUp = () => {
     http().post(`/api/trip/${trip.id}/start`)
         .then((response) => {
-            title.value = 'Travelling to destination...'
+            title.value = 'On the way to destination...'
             location.$patch({
                 destination: {
                     name: response.data.destination_name,

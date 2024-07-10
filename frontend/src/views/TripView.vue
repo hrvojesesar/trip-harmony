@@ -27,9 +27,11 @@ import { useTripStore } from '@/stores/trip';
 import { onMounted, ref } from 'vue';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
+import { useRouter } from 'vue-router';
 
 const location = useLocationStore()
 const trip = useTripStore()
+const router = useRouter()
 
 const title = ref("Waiting on a driver...")
 const message = ref("Driver not found yet, please wait...")
@@ -84,15 +86,32 @@ onMounted(() => {
     echo.channel(`passenger_${trip.user_id}`)
         .listen('TripAccepted', (e) => {
             trip.$patch(e.trip)
-
             title.value = "Your driver is on the way!"
             message.value = `${e.trip.driver.user.name} is coming in a ${e.trip.driver.year} ${e.trip.driver.color} ${e.trip.driver.make} ${e.trip.driver.model} with a license plate #${e.trip.driver.license_plate}`
         })
         .listen('TripLocationUpdated', (e) => {
             trip.$patch(e.trip)
-
             setTimeout(updateMapBounds, 5000)
-            console.log('Test')
+        })
+        .listen('TripStarted', (e) => {
+            trip.$patch(e.trip)
+            location.$patch({
+                current: {
+                    geometry: e.trip.destination
+                }
+            })
+            title.value = "You're on your way!"
+            message.value = `You are heading to ${e.trip.destination_name}...`
+        })
+        .listen('TripEnded', (e) => {
+            trip.$patch(e.trip)
+            title.value = "You have arrived!"
+            message.value = `Hope you enjoyed your ride with ${e.trip.driver.user.name}`
+            setTimeout(() => {
+                trip.reset()
+                location.reset()
+                router.push({ name: 'landing' })
+            }, 10000)
         })
 })
 
