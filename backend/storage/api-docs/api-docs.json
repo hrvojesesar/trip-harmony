@@ -29,13 +29,16 @@
                                             "type": "string"
                                         },
                                         "email_verified_at": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "nullable": true
                                         },
                                         "created_at": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "format": "date-time"
                                         },
                                         "updated_at": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "format": "date-time"
                                         },
                                         "driver": {
                                             "properties": {
@@ -45,29 +48,105 @@
                                                 "user_id": {
                                                     "type": "integer"
                                                 },
-                                                "year": {
-                                                    "type": "integer"
+                                                "birth_date": {
+                                                    "type": "string",
+                                                    "format": "date"
                                                 },
-                                                "make": {
+                                                "OIB": {
                                                     "type": "string"
                                                 },
-                                                "model": {
+                                                "serial_number_identity_card": {
                                                     "type": "string"
                                                 },
-                                                "color": {
+                                                "URL_identity_card_front": {
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "URL_identity_card_back": {
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "serial_number_driver_license": {
                                                     "type": "string"
                                                 },
-                                                "license_plate": {
+                                                "URL_driver_license_front": {
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "URL_driver_license_back": {
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "serial_number_health_card": {
                                                     "type": "string"
+                                                },
+                                                "URL_health_card_front": {
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "URL_health_card_back": {
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "Car_name": {
+                                                    "type": "string"
+                                                },
+                                                "Car_model": {
+                                                    "type": "string"
+                                                },
+                                                "Car_color": {
+                                                    "type": "string"
+                                                },
+                                                "registration_mark": {
+                                                    "type": "string"
+                                                },
+                                                "URL_registration_certificate": {
+                                                    "type": "string",
+                                                    "format": "url"
                                                 },
                                                 "created_at": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "format": "date-time"
                                                 },
                                                 "updated_at": {
-                                                    "type": "string"
+                                                    "type": "string",
+                                                    "format": "date-time"
                                                 }
                                             },
-                                            "type": "object"
+                                            "type": "object",
+                                            "nullable": true
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Driver not found."
                                         }
                                     },
                                     "type": "object"
@@ -94,37 +173,98 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "year",
-                                    "make",
-                                    "model",
-                                    "color",
-                                    "license_plate",
-                                    "name"
+                                    "name",
+                                    "surname",
+                                    "birth_date",
+                                    "OIB",
+                                    "serial_number_identity_card",
+                                    "serial_number_driver_license",
+                                    "serial_number_health_card",
+                                    "Car_name",
+                                    "Car_model",
+                                    "Car_color",
+                                    "registration_mark"
                                 ],
                                 "properties": {
-                                    "year": {
-                                        "type": "integer",
-                                        "example": 2010
-                                    },
-                                    "make": {
+                                    "name": {
                                         "type": "string",
-                                        "example": "Toyota"
+                                        "example": "John"
                                     },
-                                    "model": {
+                                    "surname": {
                                         "type": "string",
-                                        "example": "Corolla"
+                                        "example": "Doe"
                                     },
-                                    "color": {
+                                    "birth_date": {
                                         "type": "string",
-                                        "example": "Red"
+                                        "format": "date",
+                                        "example": "1980-01-01"
                                     },
-                                    "license_plate": {
+                                    "OIB": {
+                                        "type": "string",
+                                        "example": "1234567890123"
+                                    },
+                                    "serial_number_identity_card": {
+                                        "type": "string",
+                                        "example": "ID123456789"
+                                    },
+                                    "URL_identity_card_front": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com/identity_card_front.jpg"
+                                    },
+                                    "URL_identity_card_back": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com/identity_card_back.jpg"
+                                    },
+                                    "serial_number_driver_license": {
+                                        "type": "string",
+                                        "example": "DL123456789"
+                                    },
+                                    "URL_driver_license_front": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com/driver_license_front.jpg"
+                                    },
+                                    "URL_driver_license_back": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com/driver_license_back.jpg"
+                                    },
+                                    "serial_number_health_card": {
+                                        "type": "string",
+                                        "example": "HC123456789"
+                                    },
+                                    "URL_health_card_front": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com/health_card_front.jpg"
+                                    },
+                                    "URL_health_card_back": {
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "http://example.com/health_card_back.jpg"
+                                    },
+                                    "Car_name": {
+                                        "type": "string",
+                                        "example": "TOYOTA"
+                                    },
+                                    "Car_model": {
+                                        "type": "string",
+                                        "example": "COROLLA"
+                                    },
+                                    "Car_color": {
+                                        "type": "string",
+                                        "example": "RED"
+                                    },
+                                    "registration_mark": {
                                         "type": "string",
                                         "example": "ABC123"
                                     },
-                                    "name": {
+                                    "URL_registration_certificate": {
                                         "type": "string",
-                                        "example": "John Doe"
+                                        "format": "url",
+                                        "example": "http://example.com/registration_certificate.jpg"
                                     }
                                 },
                                 "type": "object"
@@ -143,6 +283,9 @@
                                             "type": "integer"
                                         },
                                         "name": {
+                                            "type": "string"
+                                        },
+                                        "surname": {
                                             "type": "string"
                                         },
                                         "email": {
@@ -165,19 +308,53 @@
                                                 "user_id": {
                                                     "type": "integer"
                                                 },
-                                                "year": {
-                                                    "type": "integer"
+                                                "birth_date": {
+                                                    "type": "string",
+                                                    "format": "date"
                                                 },
-                                                "make": {
+                                                "OIB": {
                                                     "type": "string"
                                                 },
-                                                "model": {
+                                                "serial_number_identity_card": {
                                                     "type": "string"
                                                 },
-                                                "color": {
+                                                "URL_identity_card_front": {
                                                     "type": "string"
                                                 },
-                                                "license_plate": {
+                                                "URL_identity_card_back": {
+                                                    "type": "string"
+                                                },
+                                                "serial_number_driver_license": {
+                                                    "type": "string"
+                                                },
+                                                "URL_driver_license_front": {
+                                                    "type": "string"
+                                                },
+                                                "URL_driver_license_back": {
+                                                    "type": "string"
+                                                },
+                                                "serial_number_health_card": {
+                                                    "type": "string"
+                                                },
+                                                "URL_health_card_front": {
+                                                    "type": "string"
+                                                },
+                                                "URL_health_card_back": {
+                                                    "type": "string"
+                                                },
+                                                "Car_name": {
+                                                    "type": "string"
+                                                },
+                                                "Car_model": {
+                                                    "type": "string"
+                                                },
+                                                "Car_color": {
+                                                    "type": "string"
+                                                },
+                                                "registration_mark": {
+                                                    "type": "string"
+                                                },
+                                                "URL_registration_certificate": {
                                                     "type": "string"
                                                 },
                                                 "created_at": {
@@ -194,6 +371,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request"
                     }
                 },
                 "security": [
