@@ -1316,7 +1316,7 @@
                 "tags": [
                     "Upload"
                 ],
-                "summary": "Upload two images of driver's license both sides to Azure CDN",
+                "summary": "Upload two images of driver's license (front and back side) to Azure CDN",
                 "operationId": "d57833ce0b92d78978d096481df5bc3e",
                 "requestBody": {
                     "required": true,
