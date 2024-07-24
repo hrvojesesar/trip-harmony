@@ -46,8 +46,9 @@ class LoginController extends Controller
      *     )
      * )
      */
-    public function submit(Request $request){
-        
+    public function submit(Request $request)
+    {
+
         // validate the phone number
         $request->validate([
             'phone' => 'required|numeric|min:10'
@@ -58,9 +59,10 @@ class LoginController extends Controller
             'phone' => $request->phone
         ]);
 
-        if(!$user) {
+        if (!$user) {
             return response()->json([
-                'message' => 'Could not process a user with that phone number.'], 401);
+                'message' => 'Could not process a user with that phone number.'
+            ], 401);
         }
 
         // send the user a one-time use code
@@ -68,8 +70,8 @@ class LoginController extends Controller
 
         // return back a response
         return response()->json([
-            'message' => 'A login code has been sent to your phone number.']);
-
+            'message' => 'A login code has been sent to your phone number.'
+        ]);
     }
 
     /**
@@ -101,8 +103,9 @@ class LoginController extends Controller
      * )
      * )
      */
-    public function verify(Request $request){
-        
+    public function verify(Request $request)
+    {
+
         // validate the incoming request
         $request->validate([
             'phone' => 'required|numeric|min:10',
@@ -116,17 +119,17 @@ class LoginController extends Controller
 
         // is the code provided the same as the one in the database?
         // if so, return back an auth token
-        if($user){
+        if ($user) {
             $user->update([
                 'login_code' => null
             ]);
-            
+
             return $user->createToken($request->login_code)->plainTextToken;
         }
 
         // if not, return back an error message
         return response()->json([
-            'message' => 'Could not verify the login code.'], 401);
-
+            'message' => 'Could not verify the login code.'
+        ], 401);
     }
 }

@@ -6,62 +6,62 @@ use Illuminate\Http\Request;
 
 class DriverController extends Controller
 {
-   /**
- * @OA\Get(
- *     path="/api/driver",
- *     summary="Get the user and associated driver model",
- *     tags={"Driver"},
- *     security={{"bearerAuth": {}}},
- *     @OA\Response(
- *         response=200,
- *         description="The user and associated driver model",
- *         @OA\JsonContent(
- *             @OA\Property(property="id", type="integer"),
- *             @OA\Property(property="name", type="string"),
- *             @OA\Property(property="email", type="string"),
- *             @OA\Property(property="email_verified_at", type="string", nullable=true),
- *             @OA\Property(property="created_at", type="string", format="date-time"),
- *             @OA\Property(property="updated_at", type="string", format="date-time"),
- *             @OA\Property(property="driver", type="object", nullable=true,
- *                 @OA\Property(property="id", type="integer"),
- *                 @OA\Property(property="user_id", type="integer"),
- *                 @OA\Property(property="birth_date", type="string", format="date"),
- *                 @OA\Property(property="OIB", type="string"),
- *                 @OA\Property(property="serial_number_identity_card", type="string"),
- *                 @OA\Property(property="URL_identity_card_front", type="string", format="url"),
- *                 @OA\Property(property="URL_identity_card_back", type="string", format="url"),
- *                 @OA\Property(property="serial_number_driver_license", type="string"),
- *                 @OA\Property(property="URL_driver_license_front", type="string", format="url"),
- *                 @OA\Property(property="URL_driver_license_back", type="string", format="url"),
- *                 @OA\Property(property="serial_number_health_card", type="string"),
- *                 @OA\Property(property="URL_health_card_front", type="string", format="url"),
- *                 @OA\Property(property="URL_health_card_back", type="string", format="url"),
- *                 @OA\Property(property="Car_name", type="string"),
- *                 @OA\Property(property="Car_model", type="string"),
- *                 @OA\Property(property="Car_color", type="string"),
- *                 @OA\Property(property="registration_mark", type="string"),
- *                 @OA\Property(property="URL_registration_certificate", type="string", format="url"),
- *                 @OA\Property(property="created_at", type="string", format="date-time"),
- *                 @OA\Property(property="updated_at", type="string", format="date-time")
- *             )
- *         )
- *     ),
- *     @OA\Response(
- *         response=401,
- *         description="Unauthorized",
- *         @OA\JsonContent(
- *             @OA\Property(property="message", type="string", example="Unauthenticated.")
- *         )
- *     ),
- *     @OA\Response(
- *         response=404,
- *         description="Not Found",
- *         @OA\JsonContent(
- *             @OA\Property(property="message", type="string", example="Driver not found.")
- *         )
- *     )
- * )
- */
+    /**
+     * @OA\Get(
+     *     path="/api/driver",
+     *     summary="Get the user and associated driver model",
+     *     tags={"Driver"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="The user and associated driver model",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="name", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *             @OA\Property(property="email_verified_at", type="string", nullable=true),
+     *             @OA\Property(property="created_at", type="string", format="date-time"),
+     *             @OA\Property(property="updated_at", type="string", format="date-time"),
+     *             @OA\Property(property="driver", type="object", nullable=true,
+     *                 @OA\Property(property="id", type="integer"),
+     *                 @OA\Property(property="user_id", type="integer"),
+     *                 @OA\Property(property="birth_date", type="string", format="date"),
+     *                 @OA\Property(property="OIB", type="string"),
+     *                 @OA\Property(property="serial_number_identity_card", type="string"),
+     *                 @OA\Property(property="URL_identity_card_front", type="string", format="url"),
+     *                 @OA\Property(property="URL_identity_card_back", type="string", format="url"),
+     *                 @OA\Property(property="serial_number_driver_license", type="string"),
+     *                 @OA\Property(property="URL_driver_license_front", type="string", format="url"),
+     *                 @OA\Property(property="URL_driver_license_back", type="string", format="url"),
+     *                 @OA\Property(property="serial_number_health_card", type="string"),
+     *                 @OA\Property(property="URL_health_card_front", type="string", format="url"),
+     *                 @OA\Property(property="URL_health_card_back", type="string", format="url"),
+     *                 @OA\Property(property="Car_name", type="string"),
+     *                 @OA\Property(property="Car_model", type="string"),
+     *                 @OA\Property(property="Car_color", type="string"),
+     *                 @OA\Property(property="registration_mark", type="string"),
+     *                 @OA\Property(property="URL_registration_certificate", type="string", format="url"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Unauthenticated.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Not Found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Driver not found.")
+     *         )
+     *     )
+     * )
+     */
     public function show(Request $request)
     {
         // return back the user and associated driver model
@@ -71,7 +71,7 @@ class DriverController extends Controller
         return $user;
     }
 
-   /**
+    /**
      * @OA\Post(
      *    path="/api/driver",
      *    summary="Update the user and associated driver model",

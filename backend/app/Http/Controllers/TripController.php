@@ -12,55 +12,55 @@ use App\Models\Trip;
 
 class TripController extends Controller
 {
-     /**
- * @OA\Post(
- *     path="/api/trip",
- *     summary="Create a new trip",
- *     tags={"Trip"},
- *     security={{"bearerAuth": {}}},
- *     @OA\RequestBody(
- *         required=true,
- *         @OA\JsonContent(
- *             required={"origin", "destination", "destination_name"},
- *             @OA\Property(property="origin", type="object",
- *                 @OA\Property(property="lat", type="number", example=37.7749),
- *                 @OA\Property(property="lng", type="number", example=-122.4194)
- *             ),
- *             @OA\Property(property="destination", type="object",
- *                 @OA\Property(property="lat", type="number", example=37.7749),
- *                 @OA\Property(property="lng", type="number", example=-122.4194)
- *             ),
- *             @OA\Property(property="destination_name", type="string", example="San Francisco")
- *         )
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="The new trip",
- *         @OA\JsonContent(
- *             @OA\Property(property="id", type="integer"),
- *             @OA\Property(property="user_id", type="integer"),
- *             @OA\Property(property="origin", type="object",
- *                 @OA\Property(property="lat", type="number"),
- *                 @OA\Property(property="lng", type="number")
- *             ),
- *             @OA\Property(property="destination", type="object",
- *                 @OA\Property(property="lat", type="number"),
- *                 @OA\Property(property="lng", type="number")
- *             ),
- *             @OA\Property(property="destination_name", type="string"),
- *             @OA\Property(property="driver_id", type="integer", example=null),
- *             @OA\Property(property="driver_location", type="object", example=null,
- *                 @OA\Property(property="lat", type="number"),
- *                 @OA\Property(property="lng", type="number")
- *             ),
- *             @OA\Property(property="is_started", type="boolean", example=false),
- *             @OA\Property(property="is_complete", type="boolean", example=false),
- *             @OA\Property(property="created_at", type="string"),
- *             @OA\Property(property="updated_at", type="string")
- *         )
- *     )
- * )
- */
+    /**
+     * @OA\Post(
+     *     path="/api/trip",
+     *     summary="Create a new trip",
+     *     tags={"Trip"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"origin", "destination", "destination_name"},
+     *             @OA\Property(property="origin", type="object",
+     *                 @OA\Property(property="lat", type="number", example=37.7749),
+     *                 @OA\Property(property="lng", type="number", example=-122.4194)
+     *             ),
+     *             @OA\Property(property="destination", type="object",
+     *                 @OA\Property(property="lat", type="number", example=37.7749),
+     *                 @OA\Property(property="lng", type="number", example=-122.4194)
+     *             ),
+     *             @OA\Property(property="destination_name", type="string", example="San Francisco")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="The new trip",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="id", type="integer"),
+     *             @OA\Property(property="user_id", type="integer"),
+     *             @OA\Property(property="origin", type="object",
+     *                 @OA\Property(property="lat", type="number"),
+     *                 @OA\Property(property="lng", type="number")
+     *             ),
+     *             @OA\Property(property="destination", type="object",
+     *                 @OA\Property(property="lat", type="number"),
+     *                 @OA\Property(property="lng", type="number")
+     *             ),
+     *             @OA\Property(property="destination_name", type="string"),
+     *             @OA\Property(property="driver_id", type="integer", example=null),
+     *             @OA\Property(property="driver_location", type="object", example=null,
+     *                 @OA\Property(property="lat", type="number"),
+     *                 @OA\Property(property="lng", type="number")
+     *             ),
+     *             @OA\Property(property="is_started", type="boolean", example=false),
+     *             @OA\Property(property="is_complete", type="boolean", example=false),
+     *             @OA\Property(property="created_at", type="string"),
+     *             @OA\Property(property="updated_at", type="string")
+     *         )
+     *     )
+     * )
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -80,7 +80,7 @@ class TripController extends Controller
         return $trip;
     }
 
-  
+
     /**
      * @OA\Get(
      *     path="/api/trip/{trip}",
@@ -133,12 +133,12 @@ class TripController extends Controller
     public function show(Request $request, Trip $trip)
     {
         // is the trip associated with the authenticated user?
-        if($trip->user->id === $request->user()->id) {
+        if ($trip->user->id === $request->user()->id) {
             return $trip;
         }
 
-        if($trip->driver && $request->user()->driver) {
-            if($trip->driver_id === $request->user()->driver->id) {
+        if ($trip->driver && $request->user()->driver) {
+            if ($trip->driver_id === $request->user()->driver->id) {
                 return $trip;
             }
         }
