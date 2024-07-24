@@ -1310,6 +1310,104 @@
                     }
                 ]
             }
+        },
+        "/api/upload-driver-license": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload two images of driver's license both sides to Azure CDN",
+                "operationId": "d57833ce0b92d78978d096481df5bc3e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file1": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "file2": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Obje slike su prepoznate kao valjane i uspješno su spremljene."
+                                        },
+                                        "file_url1": {
+                                            "type": "string",
+                                            "example": "http://example.com/path_to_file1"
+                                        },
+                                        "file_url2": {
+                                            "type": "string",
+                                            "example": "http://example.com/path_to_file2"
+                                        },
+                                        "extracted_text1": {
+                                            "type": "string"
+                                        },
+                                        "extracted_text2": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Prva slika nije prepoznata kao vozačka dozvola."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User not authenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
