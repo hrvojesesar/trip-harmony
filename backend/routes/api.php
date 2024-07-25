@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
     Route::post('/upload-identity-card', [UploadImagesController::class,'uploadIdentityCard']);
     Route::post('/upload-driver-license', [UploadImagesController::class, 'uploadDriverLicense']);
+    Route::post('/upload-health-card', [UploadImagesController::class, 'uploadHealthCard']);
 
     Route::post('/trip', [TripController::class, 'store']);
     Route::get('/trip/{trip}', [TripController::class, 'show']);

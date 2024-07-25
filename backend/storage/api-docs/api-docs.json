@@ -1408,6 +1408,104 @@
                     }
                 ]
             }
+        },
+        "/api/upload-health-card": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload two images of health card (front and back side) to Azure CDN",
+                "operationId": "467cd97b9a7f5fd530044e8f3a6709b8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file1": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "file2": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Obje slike su prepoznate kao valjane i uspješno su spremljene."
+                                        },
+                                        "file_url1": {
+                                            "type": "string",
+                                            "example": "http://example.com/path_to_file1"
+                                        },
+                                        "file_url2": {
+                                            "type": "string",
+                                            "example": "http://example.com/path_to_file2"
+                                        },
+                                        "extracted_text1": {
+                                            "type": "string"
+                                        },
+                                        "extracted_text2": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Prva slika nije prepoznata kao zdravstvena iskaznica."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "User not authenticated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
