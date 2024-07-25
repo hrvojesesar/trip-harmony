@@ -52,6 +52,8 @@
 <div style="display: flex; justify-content: space-around; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px;">
   <a href="https://vuejs.org/"><img src="https://vuejs.org/images/logo.png" style="width: auto; height: 80px;"></a>
   <a href="https://tailwindcss.com/"><img src="https://refactoringui.nyc3.digitaloceanspaces.com/tailwind-logo.svg" style="width: auto; height: 80px;"></a>
+   <a href="https://azure.microsoft.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/200px-Microsoft_Azure.svg.png" style="width: auto; height: 80px;"></a>
+  <a href="https://en.wikipedia.org/wiki/Optical_character_recognition"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Iconocr.png" style="width: auto; height: 80px;"></a>
 </div>
 
 &nbsp;
@@ -116,6 +118,10 @@
    `php artisan migrate`
 6. Pokrenite Laravel development server: <br>
     `php artisan serve`
+7. Prebacite se u drugi terminal u direktorij **backend**: <br>
+    `cd backend`
+8. Pokrenite WebSockete pomoću sljedeće naredbe: <br>
+    `php artisan websockets:serve`
 
 ### Frontend
 
