@@ -575,4 +575,119 @@ class UploadImagesController extends Controller
         }
         return true;
     }
+
+
+    /**
+     * @OA\Post(
+     *     path="/api/upload-registration-certificate",
+     *     summary="Upload an image of the registration certificate (second and third page) to Azure CDN",
+     *     tags={"Upload"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\MediaType(
+     *             mediaType="multipart/form-data",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="file",
+     *                     type="string",
+     *                     format="binary",
+     *                 ),
+     *             ),
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success",
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad Request",
+     *     ),
+     * )
+     */
+
+    public function uploadRegistrationCertificate(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:jpeg,png,jpg,gif,svg|max:10000',
+        ]);
+
+        // Fetch the authenticated user
+        $user = $request->user(); // Use Laravel's auth helper to get the current authenticated user
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated'], 401);
+        }
+
+        // Check if the user is a driver
+        $driver = Driver::where('user_id', $user->id)->first();
+        if (!$driver) {
+            return response()->json(['error' => 'User is not a driver'], 403);
+        }
+
+        $file = $request->file('file');
+        $filePath = $file->getPathName();
+        $fileName = time() . '_file_' . $file->getClientOriginalName();
+
+        // Extract text from the image
+        $text = $this->preprocessAndExtractText($filePath);
+        Log::info('Extracted text from file: ' . $text);
+
+        if (!$this->containsRequiredTextForRegistrationCertificate($text, $driver->Car_name, $driver->Car_model, $driver->Car_color, $driver->registration_mark)) {
+            return response()->json(['error' => 'Slika nije prepoznata kao valjana potvrda o registraciji.'], 400);
+        }
+
+        // Azure Storage configuration using SAS token
+        $accountName = env('AZURE_STORAGE_ACCOUNT_NAME');
+        $sasToken = env('AZURE_STORAGE_SAS_TOKEN');
+        $blobEndpoint = env('AZURE_STORAGE_BLOB_ENDPOINT');
+        $containerName = env('AZURE_STORAGE_CONTAINER_NAME');
+
+        $connectionString = "BlobEndpoint=$blobEndpoint;SharedAccessSignature=$sasToken";
+        $blobClient = BlobRestProxy::createBlobService($connectionString);
+
+        $content = fopen($filePath, "r");
+        $blobOptions = new CreateBlockBlobOptions();
+        $blobOptions->setContentType($file->getClientMimeType());
+
+        try {
+            $blobClient->createBlockBlob($containerName, $fileName, $content, $blobOptions);
+
+            // Generate file URL
+            $fileUrl = "$blobEndpoint/$containerName/$fileName";
+
+            // Update driver with the URL
+            $driver->update([
+                'URL_registration_certificate' => $fileUrl,
+            ]);
+
+            return response()->json([
+                'message' => 'Slika je prepoznata kao valjana i uspješno je spremljena.',
+                'file_url' => $fileUrl,
+                'extracted_text' => $text
+            ], 200);
+        } catch (\Exception $e) {
+            Log::error('Error uploading file: ', ['exception' => $e]);
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+    private function preprocessAndExtractText($imagePath)
+    {
+        // Use Tesseract OCR to extract text from the image
+        return (new TesseractOCR($imagePath))->lang('eng', 'hrv', 'bos', 'srp')->run();
+    }
+
+    private function containsRequiredTextForRegistrationCertificate($text, $carName, $carModel, $carColor, $registrationMark)
+    {
+        // Check if the key phrases exist in the extracted text
+        $phrasesToCheck = [$carName, $carModel, $carColor, $registrationMark];
+        foreach ($phrasesToCheck as $phrase) {
+            if (strpos($text, $phrase) === false) {
+                Log::info('Missing phrase regitracija: ' . $phrase);
+                return false;
+            }
+        }
+        return true;
+    }
 }

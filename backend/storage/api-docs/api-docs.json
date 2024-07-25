@@ -1506,6 +1506,44 @@
                     }
                 ]
             }
+        },
+        "/api/upload-registration-certificate": {
+            "post": {
+                "tags": [
+                    "Upload"
+                ],
+                "summary": "Upload an image of the registration certificate (second and third page) to Azure CDN",
+                "operationId": "e22e5d1e3f178495c574fbdf4bec634b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
