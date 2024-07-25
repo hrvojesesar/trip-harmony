@@ -189,7 +189,7 @@ class UploadImagesController extends Controller
     private function containsRequiredText2($text, $OIB)
     {
         // Check if the driver's OIB exists in the extracted text for the second image
-        $additionalPhrases = ["DATUM IZDAVANJA", "ENTITY CITIZENSHIP", "<<<", "<<<<<<", "<<"];
+        $additionalPhrases = ["MUNICIPALITY OF RESIDENCE", "ISSUING AUTHORITY", "<<<", "<<<<<<", "<<"];
         if (strpos($text, $OIB) === false) {
             return false;
         }
