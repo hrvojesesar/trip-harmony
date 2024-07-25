@@ -45,6 +45,8 @@
 <div style="display: flex; justify-content: space-around; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px;">
   <a href="https://laravel.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Laravel.svg/200px-Laravel.svg.png" style="width: auto; height: 80px;"></a>
   <a href="https://www.mysql.com/"><img src="https://www.mysql.com/common/logos/logo-mysql-170x115.png" style="width: auto; height: 80px;"></a>
+   <a href="https://azure.microsoft.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/200px-Microsoft_Azure.svg.png" style="width: auto; height: 80px;"></a>
+  <a href="https://en.wikipedia.org/wiki/Optical_character_recognition"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Iconocr.png" style="width: auto; height: 80px;"></a>
 </div>
 
 ### Frontend tehnologije
@@ -52,8 +54,6 @@
 <div style="display: flex; justify-content: space-around; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px;">
   <a href="https://vuejs.org/"><img src="https://vuejs.org/images/logo.png" style="width: auto; height: 80px;"></a>
   <a href="https://tailwindcss.com/"><img src="https://refactoringui.nyc3.digitaloceanspaces.com/tailwind-logo.svg" style="width: auto; height: 80px;"></a>
-   <a href="https://azure.microsoft.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/200px-Microsoft_Azure.svg.png" style="width: auto; height: 80px;"></a>
-  <a href="https://en.wikipedia.org/wiki/Optical_character_recognition"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Iconocr.png" style="width: auto; height: 80px;"></a>
 </div>
 
 &nbsp;
@@ -74,7 +74,7 @@
 - **Autentikacija u aplikaciju**: Unošenjem broja mobitela i potvrdom koda, vozači se prijavljuju u aplikaciju
 - **Registracija vozača**: Vozači unose potrebne informacije o sebi i svom vozilu te im se dodjeljuje status vozača
 - **Pregled zahtjeva**: Vozači čekaju zahtjeve putnika za vožnju, pregledavaju ih i odlučuju hoće li ih prihvatiti
-- **Vožnja do putnika**: Nakon prihvaćanja zahtjeva, vozači se kreću prema lokaciji putnika 
+- **Vožnja do putnika**: Nakon prihvaćanja zahtjeva, vozači se kreću prema lokaciji putnika
 - **Početak putovanja**: Nakon dolaska na lokaciju putnika, vozači započinju putovanje prema konačnoj destinaciji
 - **Tijek putovanja**: Za vrijeme putovanja, vozačima je omogućeno praćenje lokacije u stvarnom vremenu
 - **Završetak putovanja**: Nakon završetka putovanja, vozače se preusmjerava natrag te čekaju buduće zahtjeve putnika
@@ -101,7 +101,7 @@
 1. Klonirajte repozitorij na svoje računalo:
    ```sh
    git clone https://github.com/hrvojesesar/trip-harmony.git
-    ```
+   ```
 2. Korištenjem editora poput Visual Studio Code-a, otvorite projekt.
 
 ### Backend
@@ -117,20 +117,20 @@
 5. Pokrenite migracije za kreiranje tablica u bazi podataka: <br>
    `php artisan migrate`
 6. Pokrenite Laravel development server: <br>
-    `php artisan serve`
+   `php artisan serve`
 7. Prebacite se u drugi terminal u direktorij **backend**: <br>
-    `cd backend`
+   `cd backend`
 8. Pokrenite WebSockete pomoću sljedeće naredbe: <br>
-    `php artisan websockets:serve`
+   `php artisan websockets:serve`
 
 ### Frontend
 
 1. Pomoću terminala, prebacite se u direktorij **frontend**: <br>
    `cd frontend`
 2. Instalirajte sve JavaScript ovisnosti: <br>
-    `npm install`
+   `npm install`
 3. Pokrenite Vue development server: <br>
-    `npm run dev`
+   `npm run dev`
 
 ---
 
