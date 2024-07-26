@@ -8,6 +8,10 @@ import StandbyView from '../views/StandbyView.vue'
 import DriverView from '../views/DriverView.vue'
 import DrivingView from '../views/DrivingView.vue'
 import axios from 'axios'
+import IdentityCardView from '@/views/IdentityCardView.vue'
+import DriverLicenceView from '@/views/DriverLicenceView.vue'
+import HealthCardView from '@/views/HealthCardView.vue'
+import RegistrationCertificateView from '@/views/RegistrationCertificateView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +55,11 @@ const router = createRouter({
       path: '/driving',
       name: 'driving',
       component: DrivingView
+    },
+    {
+      path: '/identityCard',
+      name: 'identityCard',
+      component: IdentityCardView
     }
   ]
 })
