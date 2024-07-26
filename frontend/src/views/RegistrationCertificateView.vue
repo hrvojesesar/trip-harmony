@@ -5,7 +5,7 @@
             <div class="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div class="bg-white px-4 py-5 sm:p-6">
                     <div>
-                        <label for="file" class="block text-sm font-medium text-gray-700">Upload Certificate Image</label>
+                        <label for="file" class="block text-sm font-medium text-gray-700">Upload Certificate Image (Second and Third Page)</label>
                         <input type="file" @change="onFileChange($event)" accept="image/*" class="mt-1 block w-full" />
                         <img v-if="imageUrl" :src="imageUrl" alt="Registration Certificate" class="mt-2" />
                     </div>

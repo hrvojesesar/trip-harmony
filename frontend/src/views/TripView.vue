@@ -87,7 +87,7 @@ onMounted(() => {
         .listen('TripAccepted', (e) => {
             trip.$patch(e.trip)
             title.value = "Your driver is on the way!"
-            message.value = `${e.trip.driver.user.name} is coming in a ${e.trip.driver.year} ${e.trip.driver.color} ${e.trip.driver.make} ${e.trip.driver.model} with a license plate #${e.trip.driver.license_plate}`
+            message.value = `${e.trip.driver.user.name} ${e.trip.driver.user.surname} is coming in a ${e.trip.driver.Car_name} ${e.trip.driver.Car_model} ${e.trip.driver.Car_color} with a registration mark ${e.trip.driver.registration_mark}`
         })
         .listen('TripLocationUpdated', (e) => {
             trip.$patch(e.trip)
@@ -106,7 +106,7 @@ onMounted(() => {
         .listen('TripEnded', (e) => {
             trip.$patch(e.trip)
             title.value = "You have arrived!"
-            message.value = `Hope you enjoyed your ride with ${e.trip.driver.user.name}`
+            message.value = `Hope you enjoyed your ride with ${e.trip.driver.user.name} ${e.trip.driver.user.surname}!`
             setTimeout(() => {
                 trip.reset()
                 location.reset()
