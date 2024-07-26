@@ -70,6 +70,11 @@ const router = createRouter({
       path: '/healthCard',
       name: 'healthCard',
       component: HealthCardView
+    },
+    {
+      path: '/registrationCertificate',
+      name: 'registrationCertificate',
+      component: RegistrationCertificateView
     }
   ]
 })
