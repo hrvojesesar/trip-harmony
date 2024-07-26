@@ -60,6 +60,11 @@ const router = createRouter({
       path: '/identityCard',
       name: 'identityCard',
       component: IdentityCardView
+    },
+    {     
+      path: '/driverLicence',
+      name: 'driverLicence',
+      component: DriverLicenceView    
     }
   ]
 })
