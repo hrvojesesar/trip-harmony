@@ -65,6 +65,11 @@ const router = createRouter({
       path: '/driverLicence',
       name: 'driverLicence',
       component: DriverLicenceView    
+    },
+    {
+      path: '/healthCard',
+      name: 'healthCard',
+      component: HealthCardView
     }
   ]
 })

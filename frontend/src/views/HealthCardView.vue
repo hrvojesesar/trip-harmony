@@ -1,6 +1,6 @@
 <template>
     <div class="pt-16">
-        <h1 class="text-3xl font-semibold mb-4">Upload Driver's License (Only Scanned Images)</h1>
+        <h1 class="text-3xl font-semibold mb-4">Upload Health Card (Only Scanned Images)</h1>
         <form @submit.prevent="handleUpload">
             <div class="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div class="bg-white px-4 py-5 sm:p-6">
@@ -68,7 +68,7 @@ const handleUpload = async () => {
     formData.append('file2', file2.value)
 
     try {
-        const response = await http().post('/api/upload-driver-license', formData, {
+        const response = await http().post('/api/upload-health-card', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
@@ -76,7 +76,7 @@ const handleUpload = async () => {
         loading.value = false
         successMessage.value = response.data.message
         setTimeout(() => {
-            router.push({ name: 'healthCard' })
+            router.push({ name: 'standby' })
         }, 3000)
     } catch (error) {
         loading.value = false
