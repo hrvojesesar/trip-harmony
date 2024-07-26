@@ -72,7 +72,7 @@
 ### Vozači
 
 - **Autentikacija u aplikaciju**: Unošenjem broja mobitela i potvrdom koda, vozači se prijavljuju u aplikaciju
-- **Registracija vozača**: Vozači unose potrebne informacije o sebi i svom vozilu te im se dodjeljuje status vozača
+- **Registracija vozača**: Vozači unose potrebne informacije o sebi i svom vozilu. Kako bi korisnik dokazao svoju kompetentnost kao vozač i da posjeduje osnovne dokumente koji su potrebni svakom vozaču, mora učitati sljedeće dokumente u aplikaciju koji će potom proći kroz razne validacije: osobna iskaznica (dokaz identiteta korisnika), vozačka dozvola (dokaz o korisnikovoj sposobnosti za upravljanje vozilom), zdravstvena iskaznica (dokaz o zdravstvenom stanju korisnika), potvrda o registraciji (dokaz o registraciji vozila). Ako su slike uspješno validirane i učitane, korisniku se dodjeljuje status vozača
 - **Pregled zahtjeva**: Vozači čekaju zahtjeve putnika za vožnju, pregledavaju ih i odlučuju hoće li ih prihvatiti
 - **Vožnja do putnika**: Nakon prihvaćanja zahtjeva, vozači se kreću prema lokaciji putnika
 - **Početak putovanja**: Nakon dolaska na lokaciju putnika, vozači započinju putovanje prema konačnoj destinaciji
@@ -154,6 +154,10 @@
    <img src="frontend/public/Images/Image-13.png" width="800px">
    <img src="frontend/public/Images/Image-14.png" width="800px">
    <img src="frontend/public/Images/Image-15.png" width="800px">
+   <img src="frontend/public/Images/Image-16.png" width="800px">
+   <img src="frontend/public/Images/Image-17.png" width="800px">
+   <img src="frontend/public/Images/Image-18.png" width="800px">
+   <img src="frontend/public/Images/Image-19.png" width="800px">
 <p>
 
 ---
